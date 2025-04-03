@@ -13,7 +13,7 @@ public class KSmaller {
 //    }; // min heap
 
     private int[] H = {
-            1//,20,4,31,25,5
+            1,20,4,31,25,5
     };
 
     private int numRuns = 0;
