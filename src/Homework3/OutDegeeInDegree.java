@@ -1,5 +1,6 @@
 package Homework3;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -10,12 +11,21 @@ import java.util.Map;
 public class OutDegeeInDegree {
 
     private Graph graph;
-
+    private boolean[] finished;
 
     public void evenInOutDegree() {
         Node start = graph.getFirstNode();
+        finished = new boolean[graph.getNumNodes() + 1];
 
-        dfsApproach(start);
+        for (int i = 0; i < graph.getNumNodes(); i++) {
+            finished[i] = false;
+        }
+
+        for (Node v : graph.getNodes()) {
+            dfsApproach(v);
+        }
+
+
 
         graph.print();
 
@@ -23,14 +33,18 @@ public class OutDegeeInDegree {
 
 
     public void dfsApproach(Node node) {
-        for (int i = 0; i < node.getNumNeighbors(); i++) {
-            if (node.getNeighbor(i).hasPath(node)) {
-                System.out.println("removing " + node + " from " + node.getNeighbor(i));
-                node.getNeighbor(i).removePath(node);
-                dfsApproach(node.getNeighbor(i));
-            }
+        if (!finished[node.getKey()]) {
+            for (int i = 0; i < node.getNumNeighbors(); i++) {
+                if (node.getNeighbor(i).hasPath(node)) {
+                    System.out.println("removing " + node + " from " + node.getNeighbor(i));
+                    node.getNeighbor(i).removePath(node);
+                    dfsApproach(node.getNeighbor(i));
+                }
 
+            }
+            finished[node.getKey()] = true;
         }
+
     }
 
 
@@ -55,6 +69,13 @@ public class OutDegeeInDegree {
         g.addEdge(3, 4);
         g.addEdge(3, 6);
         g.addEdge(5, 6);
+
+        g.addNode(7);
+        g.addNode(8);
+        g.addNode(9);
+        g.addEdge(7, 8);
+        g.addEdge(8, 9);
+        g.addEdge(9, 7);
 
         return g;
     }
@@ -130,8 +151,15 @@ class Graph {
 
     private HashMap<Integer, Node> nodes;
 
+    public int getNumNodes() {
+        return nodes.size();
+    }
     public Graph() {
         nodes = new HashMap<>();
+    }
+
+    public Collection<Node> getNodes() {
+        return nodes.values();
     }
 
     public void addNode(int key) {
@@ -187,6 +215,10 @@ class Node {
 
     public int getNumNeighbors() {
         return adj.size();
+    }
+
+    public int getKey() {
+        return key;
     }
 
     @Override
