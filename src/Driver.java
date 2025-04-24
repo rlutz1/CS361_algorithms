@@ -1,14 +1,21 @@
 import Homework3.KSmaller;
 import Homework3.OutDegeeInDegree;
+import Homework4.LandWater;
 
 public class Driver {
 
     public static void main(String[] args) {
         // run anything here.
-        OutDegeeInDegree oi = new OutDegeeInDegree();
-        oi.genGraph();
-        oi.evenInOutDegree();
-        // todo, test this more
+
+        int[][] tester = {
+                {1, 1, 1, 1, 0},
+                {1, 1, 0, 1, 0},
+                {1, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0}
+        };
+
+        LandWater lw = new LandWater();
+        System.out.println(lw.howManyIslands(tester));
 
     }
 
